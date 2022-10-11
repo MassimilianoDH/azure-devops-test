@@ -28,8 +28,9 @@ suscripción de Azure en un RG que contenga tu nombre.
 
 En este reto decidí usar Microsoft Bicep para crear nuestras ARM templates ya que este nos ofrece código más legible, modularidad y facilidad al trabajar con outputs. En nuestro repositorio encontrara un directorio llamado `resources`, dentro de este hay 3 sub-directorios (`keyVault`, `seviceBus`, `storageAccount`) que contienen los recursos exigidos por el reto. En cada archivo de Bicep se define el recurso y el `Connection String` se expone como output. Los archivos mencionados anteriormente son luego invocados por `main.bicep` ubicado en nuestro directorio `root`. Finalmente `main.bicep` es desplegado por nuestro Azure Pipeline y los `Connection String` son expuestos en nuestro Pipeline con un script de PowerShell (inline).
 
-NOTA: `main.bicep` creara su propio Resource Group de Azure con `<MI NOMBRE>`.
-NOTA: Puede crear un ARM template con el comando 'az bicep build `--file ./main.bicep`.
+- NOTA: `main.bicep` creara su propio Resource Group de Azure con `<MI NOMBRE>`.
+
+- NOTA: Puede crear un ARM template con el comando `az bicep build '--file ./main.bicep'`.
 
 ## 🚀 USO <a name = "uso"></a>
 
@@ -98,8 +99,9 @@ For this challenge you must perform the following activities:
 
 In this challenge I decided to use Microsoft Bicep to create our ARM templates since it offers us more readable code, modularity and ease when working with outputs. In our repository you will find a directory called `resources`, within this there are 3 sub-directories (`keyVault`, `seviceBus`, `storageAccount`) that contain the resources required by the challenge. In each Bicep file the resource is defined and the `Connection String` is exposed as output. The files mentioned above are then called by `main.bicep` located in our `root` directory. Finally `main.bicep` is deployed by our Azure Pipeline and the `Connection String` are exposed in our Pipeline with a PowerShell script (inline).
 
-NOTE: `main.bicep` will create its own Azure Resource Group with `<MY NAME>`.
-NOTE: You can create an ARM template with the command 'az bicep build `--file ./main.bicep`.
+- NOTE: `main.bicep` will create its own Azure Resource Group with `<MY NAME>`.
+
+- NOTE: You can create an ARM template with the command `az bicep build '--file ./main.bicep'`.
 
 ## 🚀 USAGE <a name = "usage"></a>
 
