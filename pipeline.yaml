@@ -1,0 +1,71 @@
+trigger:
+- master
+
+name: Deploy Bicep Files
+
+variables:
+  azureServiceConnection: 'MassimilianoDH-ARMServiceConnection' # MUST BE THE SAME
+  location: 'centralus'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- bash: az bicep build --file './main.bicep'
+  displayName: 'Compile Bicep to ARM'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  name: DeployInfra
+  displayName: 'Deploy ARM Template'
+  inputs:
+    deploymentScope: 'Subscription'
+    azureResourceManagerConnection: '$(azureServiceConnection)'
+    location: '$(location)'
+    templateLocation: 'Linked artifact'
+    csmFile: './main.json' # created by bash script
+    deploymentName: 'Bicep-Main'
+    deploymentMode: 'Incremental'
+    deploymentOutputs: 'deployOutputs'
+
+- task: PowerShell@2
+  name: 'ConnectionStrings'
+  displayName: 'Connection Strings'
+  inputs:
+    targetType: inline
+    script: |
+      $armOutputObj = '$(deployOutputs)' | ConvertFrom-Json
+      $armOutputObj.PSObject.Properties | ForEach-Object {
+        $keyname = $_.Name
+        $value = $_.Value.value
+
+        # Creates a standard pipeline variable
+        Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+
+        # Creates an output variable
+        Write-Output "##vso[task.setvariable variable=$keyName;issecret=false;isOutput=true]$value"
+
+        # Display keys in pipeline
+        Write-Output "$keyName : $value"
+      }
+    pwsh: true
+
+# Exposing your Connection Strings in your Pipelines is not recommended because sensitive information will be available to anyone with access to your project.
+# No se recomienda exponer sus Connection Strings en sus Pipelines porque la información confidencial estará disponible para cualquier persona con acceso a su proyecto.
+
+- bash: |
+    echo "NOTE: JUST TO MAKE STRINGS MORE VISIBLE, READ CODE COMMENTS"
+    echo "NOTA: SOLO PARA HACER LOS STRINGS MAS VISIBLES, LEA LOS COMENTARIOS EN EL CODIGO"
+    echo "$(keyVaultConnectionString)"
+  displayName: 'Key Vault Connection String'
+
+- bash: |
+    echo "NOTE: JUST TO MAKE STRINGS MORE VISIBLE, READ CODE COMMENTS"
+    echo "NOTA: SOLO PARA HACER LOS STRINGS MAS VISIBLES, LEA LOS COMENTARIOS EN EL CODIGO"
+    echo "$(serviceBusConnectionString)"
+  displayName: 'Service Bus Connection String'
+
+- bash: |
+    echo "NOTE: JUST TO MAKE STRINGS MORE VISIBLE, READ CODE COMMENTS"
+    echo "NOTA: SOLO PARA HACER LOS STRINGS MAS VISIBLES, LEA LOS COMENTARIOS EN EL CODIGO"    
+    echo "$(storageAccountConnectionString)"
+  displayName: 'Storage Account Connection String'
