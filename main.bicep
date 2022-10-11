@@ -6,7 +6,7 @@ param location string = 'centralus'
 
 // Creating resource group
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: 'massimilianodh-resourcegroupasd' // CHANGE
+  name: 'massimilianodh-resourcegroup-test1' // CHANGE
   location: location
 }
 
