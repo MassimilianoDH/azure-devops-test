@@ -62,7 +62,7 @@ También me tome la libertad de agregar un equivalente en Hashicorp Terraform de
 
 - [CI de Terraform](https://github.com/MassimilianoDH/terraform-push)
 
-## 🎉 CONCLUSIÓN <a name = "conclusion"></a>
+## 🏁 CONCLUSIÓN <a name = "conclusion"></a>
 
 Espero que les guste mi solución a este reto.
 
@@ -133,7 +133,7 @@ I also took the liberty of adding a Hashicorp Terraform equivalent of the resour
 
 - [CI de Terraform](https://github.com/MassimilianoDH/terraform-push)
 
-## 🎉 CONCLUSION <a name = "conclusion"></a>
+## 🏁 CONCLUSION <a name = "conclusion"></a>
 
 I hope you like my solution to this challenge.
 
